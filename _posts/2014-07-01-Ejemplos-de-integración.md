@@ -1,12 +1,13 @@
 ---
 category: Ejemplos
+path: '/ejemplos-integracion-tpv'
 
 layout: nil
 ---
 
 # Ejemplo básico de integración Loyal Guru <-> TPV
 
-**En resumen:**
+__En resumen:__
 
 A continuación se presenta, y detalla paso a paso, un escensario sencillo de integración de la plataforma Loyal Guru con un sistema de TPV en un establecimiento. Imaginemos un escenario en el que el cliente se identifica ante el vendedor, presenta un cupón de descuento, se aplica un descuento sobre su compra y se finaliza la compra. En este proceso se realizan 3 llamadas al sistema de Loyal Guru ( 1. Identificación de cliente 2. Validación de cupón 3. Guardar la compra realizada ).
 
@@ -17,6 +18,7 @@ El consumidor dispone de una aplicación móvil ( iOs/Android ) en la que se ha 
 El cliente pueda presentar en el momento de la compra un cupón de descuento enseñando otra pantalla de la aplicación móvil en la que aparecerá un código único del cupón ( que podrá leerse o escanearse de un QR ), éste se deberá introducir en el TPV y entonces mediante un botón en el tpv de "validar" se deberá realizar una llamada a Loyal Guru para comprobar que el código de cupón pertenece a un cupón válido y para además obtener que tipo de descuento tiene asociado el cupón en cuestión ( inicialmente X% sobre el total de la compra ). Una vez validado el cupón desde el TPV se podrá aplicar directamente el descuento asociado. Será importante que si a la compra se le ha aplicado un descuento vía cupón, el id del cupón tambiérn deberá enviarse al guardar la compra junto a los datos del cliente y los datos de la compra.
 
 **Detalles técnicos para llamar a la API**: 
+
 - La api se basa en el [protocolo HTTP](http://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177), conviene entender el proceso y la estructura de una **petición** y de una **respuesta** en este protocolo.  
 - Los ejemplos de llamada se ilustran con [curl](http://curl.haxx.se/) pero el desarrollador deberá utilizar un **cliente HTTP** en función del lenguaje de desarrollo ( ej: [Faraday](https://github.com/lostisland/faraday)-Ruby, [HTTPFull](http://phphttpclient.com/)-PHP, [RestSharp](http://restsharp.org/)-.Net, etc.. ).   
 - La **url base de la api** también deberá especificarse de forma correcta ( este ejemplo es del entorno de TEST: http://loyalty-jobtitude-staging.herokuapp.com/api , en PRODUCTION sería https://loyal.guru/api ).  
@@ -30,7 +32,8 @@ El cliente pueda presentar en el momento de la compra un cupón de descuento ens
 1. Habilitamos **campo** en pantalla de compra de TPV de _código cliente_, y (opcionalmente) **botón** de "identificar"
 2. Escaneamos el qr o leemos el código directamente de la aplicación móvil del ciente y lo **introducimos** en este campo.
 3. Al introducir el código ( o presionar botón de "identificar" ) se realiza llamada con el método **GET** al sistema de loyal guru con la siguiente estructura ( notar el id en ..customer/**1**.. y el parametro **with_html**):  
-```bash
+
+```
 curl http://loyalty-jobtitude-staging.herokuapp.com/api/customers/1\?with_html\=true 
    -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
    -H "Content-Type:application/json" 
@@ -39,8 +42,8 @@ curl http://loyalty-jobtitude-staging.herokuapp.com/api/customers/1\?with_html\=
 
 **ÉXITO**: Si la llamada devuelve un **status de 200** significará que el **consumidor se ha encontrado**, y el cuerpo de la respuesta vendrá con los datos del cliente y además con un campo "html" que podrá mostrarse directamente en el espacio deseado del tpv ( con el nombre, los puntos del cliente, etc... )  
 
-**cabeceras** de la respuesta:  
-```bash
+_cabeceras_ de la respuesta:  
+```
  Host: loyalty-jobtitude-staging.herokuapp.com
 > Content-Type:application/json
 > Accept: application/vnd.loyalguru.v1
@@ -102,24 +105,27 @@ curl http://loyalty-jobtitude-staging.herokuapp.com/api/customers/1\?with_html\=
 ### 3. Guardar la compra
 
 1. Al cerrar la compra se realizará una llamada con el método **POST** al sistema de loyal guru:   
-```bash
+
+```
 curl -v http://loyalty-jobtitude-staging.herokuapp.com/api/activities 
 -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
 -H "Content-Type:application/json" 
 -H "Accept: application/vnd.loyalguru.v1"  
 -d '{
-		"customer_id":"1", 
-		"external_id":"200", 
-		"total":"4000", 
-		"location_id":"1",
-		"voucher_id":"xxxxxxx", 
-		"lines_attributes": [
-			{"product_id":"99","quantity":"3","order":"1","price":"50"},
-			{"product_id":"45678","quantity":"4","order":"2","price":"199"}
-			],
-	}'
+	"customer_id":"1", 
+	"external_id":"200", 
+	"total":"4000", 
+	"location_id":"1",
+	"voucher_id":"xxxxxxx", 
+	"lines_attributes": [
+		{"product_id":"99","quantity":"3","order":"1","price":"50"},
+		{"product_id":"45678","quantity":"4","order":"2","price":"199"}
+		]
+}'
 ```  
+
 Notar: 
+
 - que los **parámetros**, al especificar el content-type en **JSON** deberán enviarse en JSON. 
 - **customer_id** sería el id escaneado del consumidor
 - **external_id** sería el id del ticket en el sistema propio de la empresa
