@@ -2,9 +2,10 @@
 
 ## Endpoint
 
-The entry point to the API is:   
-**Production:** https://loyal.guru/api    
-**Staging:** http://loyalty-jobtitude-staging.herokuapp.com/api/   
+The entry point to the API is:  
+
+- **Production:** https://loyal.guru/api 
+- **Staging:** http://loyalty-jobtitude-staging.herokuapp.com/api/
 
 ## Data Types
 
@@ -32,7 +33,7 @@ You can find an example if you point your browser to base_api_url/public
 
 ## GUID's
 
-Always will use GUID's except when calling as a USER asking for a CUSTOMER. In that case we'll ask for the <code>memberhip_number</code>, you can configure this param in order to be the DNI of the person, an incremental number, etc.. ) 
+Always will use GUID's except when calling as a USER asking for a CUSTOMER. In that case we'll ask for the **memberhip_number**, you can configure this param in order to be the DNI of the person, an incremental number, etc.. ) 
 
 ## Conditional requests
 Most API responses come with appropriate cache-control headers set to assist in client-side caching. If you have cached a response, do not request again until the response has expired; when you do request something again, set the **If-Modified-Since** request header to the “last modified” time returned. If the response hasn’t changed, the Loyal Guru service will respond quickly with the 304 Not Modified status (i.e., your cached version is still good and your application should use it)

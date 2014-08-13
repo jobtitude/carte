@@ -7,14 +7,14 @@ http://guides.rubyonrails.org/layouts_and_rendering.html#the-status-option
 **Status codes in the <code>40x</code> and <code>50x</code> ranges will provide a <code>message</code> field with a description of the particular error**, optinonally depending on the error will also supply an **errors** array
 
 Common error response
-```json
+{% highlight json %}
 {
-    "message": "Some sort of error message",
+    "message": "Some sort of error message"
 }
-```
+{% endhighlight %}
 
 Enriched error response
-```json
+{% highlight json %}
 {
   "message": "Some sort of complete error message",
   "errors":{
@@ -22,7 +22,8 @@ Enriched error response
     "customer_id":["This field launches red bubbles"]
    },
 }
-```
+{% endhighlight %}
+
 ## 200 OK
 
 The request was completed successfully. You may see this status after a GET, PUT, PATCH or DELETE.

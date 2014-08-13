@@ -1,6 +1,8 @@
 ---
 exclude: ['README.markdown']
 permalink: ':title'
-pygments: true
 safe: false
 title: 'Loyal Guru - API Docs'
+highlighter: rouge
+kramdown:
+  input: GFM

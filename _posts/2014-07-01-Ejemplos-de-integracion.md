@@ -2,12 +2,11 @@
 category: Ejemplos
 path: '/ejemplos-integracion-tpv'
 
-layout: nil
 ---
 
 # Ejemplo básico de integración Loyal Guru <-> TPV
 
-__En resumen:__
+**En resumen:**
 
 A continuación se presenta, y detalla paso a paso, un escensario sencillo de integración de la plataforma Loyal Guru con un sistema de TPV en un establecimiento. Imaginemos un escenario en el que el cliente se identifica ante el vendedor, presenta un cupón de descuento, se aplica un descuento sobre su compra y se finaliza la compra. En este proceso se realizan 3 llamadas al sistema de Loyal Guru ( 1. Identificación de cliente 2. Validación de cupón 3. Guardar la compra realizada ).
 
@@ -33,18 +32,21 @@ El cliente pueda presentar en el momento de la compra un cupón de descuento ens
 2. Escaneamos el qr o leemos el código directamente de la aplicación móvil del ciente y lo **introducimos** en este campo.
 3. Al introducir el código ( o presionar botón de "identificar" ) se realiza llamada con el método **GET** al sistema de loyal guru con la siguiente estructura ( notar el id en ..customer/**1**.. y el parametro **with_html**):  
 
-```
+**petición** a la API:    
+
+  {% highlight shell %}
 curl http://loyalty-jobtitude-staging.herokuapp.com/api/customers/1\?with_html\=true 
    -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
    -H "Content-Type:application/json" 
    -H "Accept: application/vnd.loyalguru.v1"
-```  
+{% endhighlight %} 
 
 **ÉXITO**: Si la llamada devuelve un **status de 200** significará que el **consumidor se ha encontrado**, y el cuerpo de la respuesta vendrá con los datos del cliente y además con un campo "html" que podrá mostrarse directamente en el espacio deseado del tpv ( con el nombre, los puntos del cliente, etc... )  
 
-_cabeceras_ de la respuesta:  
-```
- Host: loyalty-jobtitude-staging.herokuapp.com
+**cabeceras** de la respuesta:  
+
+{% highlight shell %}
+Host: loyalty-jobtitude-staging.herokuapp.com
 > Content-Type:application/json
 > Accept: application/vnd.loyalguru.v1
 >
@@ -54,9 +56,10 @@ _cabeceras_ de la respuesta:
 < Connection: close
 < Date: Tue, 12 Aug 2014
 ...
-```
+{% endhighlight %} 
+
 **cuerpo** de la respuesta:
-```json
+{% highlight json %}
 {
   "html": "\n        <p>Eric Ponce Rodriguez</p>\n        <p>0</p>\n      ",
   "membership_number": 1,
@@ -69,11 +72,12 @@ _cabeceras_ de la respuesta:
   "score": 0
   ...
 }
-```  
+{% endhighlight %}
+
  **ERROR - CONSUMIDOR NO ENCONTRADO:** Si la llamada devuelve un **status de error 404** ( not found ) significará que el **consumidor no existe**, mostaremos por pantalla el mensaje necesaio ( ej: Cliente no registrado en el sistema, por favor recomendar registro en aplicación móvil o introducir número correcto )  
 
 **cabeceras** de la respuesta:
-```bash
+{% highlight bash %}
 > User-Agent: curl/7.30.0
 > Host: loyalty-jobtitude-staging.herokuapp.com
 > Content-Type:application/json
@@ -85,7 +89,7 @@ _cabeceras_ de la respuesta:
 < Connection: close
 < Date: Tue, 12 Aug 2014 15:16:14 GMT
 ...
-```
+{% endhighlight %}
 
 **ERROR - cuatrocientos:** Es posible que la API devuelva otros errores ( 400 : petición mal realiazada , 403 : acción prohibida , etc.. ) recomendamos consultar la [lista de status http](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes) en caso de duda, o enviar un mail a developers@loyal.guru. 
 
@@ -94,11 +98,12 @@ _cabeceras_ de la respuesta:
 
 1. **Habilitamos campo** de "cupón/promoción" en pantalla de compra de tpv, y ( opcionalmente) **botón** de "validar".
 2. Escaneamos QR o leemos código de cupón directamente de la aplicación y lo **introducimos** en el campo creado
-3. Al introducir el código ( o presionar botón de "validar" ) se **realiza llamada** con el método **GET** al sistema de loyal guru con la siguiente estructura:  
+3. Al introducir el código ( o presionar botón de "validar" ) se **realiza llamada** con el método **GET** al sistema de loyal guru con la siguiente estructura:
 ```GET loyal.guru/api/vouchers/xxxxxxx```  
-<small>**Importante:** Recordar que las llamadas tendrán que realizarse de forma correcta ( cabecera de autenticación, cabecera de vesión, cabecera de content-ype, etc... ), sino los resultados serán incorrectos.</small>
+
   1. Si la llamada devuelve un **status de ERROR 404** ( not found ) significará que el **cupón no existe**, mostaremos por pantalla el mensaje necesaio ( ej: Cupón no encontrado en el sistema, por favor recomendar la recarga del cupón o la introducción del número de cupón correcto )  
   2. Si la llamada devuelve un **status de 200** significará que el **cupón se ha encontrado** y entonces en el cuerpo de la respuesta llegará un objeto con los datos del cupón.  
+
     1. Si el **cupón ya ha sido utilizado** y por lo tanto no es válido el campo "**pending**" vendrá a "**false**", y por lo tanto se podrá mostrar un mensaje de "Lo sentimos el cupón ya se ha utilizado"  
     2. Si el **cupón es válido** y todavía no se ha canjeado el campo "**pending**" estará a "**true**" y entonces será necesario acceder al campo "discounts". Este campo será un array de objectos de descuentos en el que para el caso de por ejemplo un descuento de un 20% sobre el total del tickect llegará un en el objecto un campo de "**discount**":"**20%**". De esta forma, será responsabilidad del TPV coger este descuento ( ej: 20% ) y aplicarlo al total del ticket.  
 
@@ -106,7 +111,9 @@ _cabeceras_ de la respuesta:
 
 1. Al cerrar la compra se realizará una llamada con el método **POST** al sistema de loyal guru:   
 
-```
+**petición** a la API: 
+
+{% highlight bash %}
 curl -v http://loyalty-jobtitude-staging.herokuapp.com/api/activities 
 -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
 -H "Content-Type:application/json" 
@@ -122,7 +129,7 @@ curl -v http://loyalty-jobtitude-staging.herokuapp.com/api/activities
 		{"product_id":"45678","quantity":"4","order":"2","price":"199"}
 		]
 }'
-```  
+{% endhighlight %}
 
 Notar: 
 
@@ -132,7 +139,8 @@ Notar:
 - **location_id** sería el id del establecimiento del tpv de la empresa ( otorgado por Loyal Guru )
 - **total** sería el dinero total pagado por el cliente en ese ticket
 - **lines_attributes** es el array que contiene cada producto ( **product_id**: id del producto para la empresa, **quantity**: cantidad de productos en ticket, **order**: orden de la línea de ticket, **price**: precio del artículo ) 
-- **voucher_id**: sería el código del cupón validado
+- **voucher_id**: sería el código del cupón validado  
+
 ***
 
 # Consejos de implementación en TPV

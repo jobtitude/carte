@@ -412,7 +412,8 @@ body,
 input,
 textarea {
   color: #191919;
-  font: 14px/140% 'Open Sans', Arial, sans-serif;
+  font: 14px/140% Arial, sans-serif;
+  line-height:1.4em;
 }
 
 a {
@@ -514,7 +515,7 @@ code {
 #content {
   padding: 20px;
   padding-left: 260px;
-  max-width: 700px;
+  max-width: 740px;
 }
 
 #content .control {
@@ -623,6 +624,7 @@ code {
   padding: 15px 15px 0;
 }
 
+
 #content .body code {
   border: 1px solid #e2e7ea;
   background: #eef1f2;
@@ -633,6 +635,7 @@ code {
   padding: 0 1px;
 }
 
+#content .body pre code,
 #content .body p > code {
   display: block;
   padding: 15px;

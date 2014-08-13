@@ -6,7 +6,7 @@ Recommended reading: http://stateless.co/hal_specification.html
 
 Most responses from our API will contain a property named _links. This property is a JSON object, or in the XML version an element, with one entry for every link relation.
 
-```json
+{% highlight json %}
 "_links": {
   "link_categories": {
     "href": "https://loyal.guru/api/people/ada/link-categories"
@@ -27,21 +27,21 @@ Most responses from our API will contain a property named _links. This property 
     "href": "https://loyal.guru/api/people/ada/taglines/new"
   }
 }
-```
+{% endhighlight %}
 
 ## Embedded Resources
 
-Sometimes you want to get a resource and also its related resources in a single request. You can use the <code>api_embed</code> for that when using Loyal Guru API.
+Sometimes you want to get a resource and also its related resources in a single request. You can use the **api_embed** for that when using Loyal Guru API.
 
-When a response contains <code>embedded</code> resources they will be an _embedded object. The object will have one entry per each of the embedded relations
+When a response contains **embedded** resources they will be an _embedded object. The object will have one entry per each of the embedded relations
 
 ## Lists as embedded resources
 
 Every list of resources is represented as an embedded resource. 
 
-Several results will be contained into a <code>_embedded</code> object, under the property <code>list</code>.
+Several results will be contained into a **_embedded** object, under the property **list**.
 
-```json
+{% highlight json %}
 "_embedded": {
 "list": [
   {
@@ -63,13 +63,13 @@ Several results will be contained into a <code>_embedded</code> object, under th
     "scope": "Links::TeamLink"
   }]
 }
-```
+{% endhighlight %}
 
 ## Pagination
 
 You can see the <code>_links</code> object contains link relations for paginating the results.
 
-```json
+{% highlight json %}
 "_links": {
   "prev": {
   "href": "https://loyal.guru/api/search?q=redis&amp;list_since=1"
@@ -81,11 +81,12 @@ You can see the <code>_links</code> object contains link relations for paginatin
   "href": "https://loyal.guru/api/search?q=redis"
   }
 }
-```
+{% endhighlight %}
 
-If we are talking about the first page, no <code>prev</code> param will exist.
+If we are talking about the first page, no **prev** param will exist.
 
 *** 
 
 **Pendiente**
+
 - New resources: What about calling a new resource endpoint in order to get a full object to avoid constructing manually the new forms.
