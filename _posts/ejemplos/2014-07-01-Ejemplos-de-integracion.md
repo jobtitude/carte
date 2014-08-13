@@ -36,7 +36,7 @@ El cliente pueda presentar en el momento de la compra un cupón de descuento ens
 
 **petición** a la API:    
 
-  {% highlight shell %}
+  {% highlight bash %}
 curl http://loyalty-jobtitude-staging.herokuapp.com/api/customers/1\?with_html\=true 
    -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
    -H "Content-Type:application/json" 
@@ -47,7 +47,7 @@ curl http://loyalty-jobtitude-staging.herokuapp.com/api/customers/1\?with_html\=
 
 **cabeceras** de la respuesta:  
 
-{% highlight shell %}
+{% highlight bash %}
 Host: loyalty-jobtitude-staging.herokuapp.com
 > Content-Type:application/json
 > Accept: application/vnd.loyalguru.v1
@@ -101,7 +101,7 @@ Host: loyalty-jobtitude-staging.herokuapp.com
 1. **Habilitamos campo** de "cupón/promoción" en pantalla de compra de tpv, y ( opcionalmente) **botón** de "validar".
 2. Escaneamos QR o leemos código de cupón directamente de la aplicación y lo **introducimos** en el campo creado
 3. Al introducir el código ( o presionar botón de "validar" ) se **realiza llamada** con el método **GET** al sistema de loyal guru con la siguiente estructura:
-{% highlight shell %}
+{% highlight bash %}
 curl http://loyalty-jobtitude-staging.herokuapp.com/api/vouchers/1 
    -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
    -H "Content-Type:application/json" 

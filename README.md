@@ -1,17 +1,15 @@
 Loyal Guru Api docs based on Carte from dev-ops.
 
-First run:
-```bash
-bundle install --path .vendor
-```
+First run:  
+Make sure you have jekyll installed
 
-Development:
+Development:  
 ```bash
 jekyll serve --watch
 jekyll build # if watch is not rebuilding
 ```
 
-Deploy ( keep gh-pages branch! ):
+Deploy ( keep gh-pages branch! ):  
 ```bash
 ggpush
 ```
