@@ -9696,6 +9696,7 @@ $('#sidebar a').each(function () {
     });
 });
 
+
 // Hide all/Show all links
 var show = $('<a class=\'control show\'>Show all</a>');
 show.click(function () {

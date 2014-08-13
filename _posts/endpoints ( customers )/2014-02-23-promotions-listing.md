@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/promotions'
 title: 'Promotions listing'
 type: 'GET'

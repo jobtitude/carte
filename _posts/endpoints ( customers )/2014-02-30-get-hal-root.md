@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/public'
 title: 'Get Api HAL Root'
 type: 'GET'

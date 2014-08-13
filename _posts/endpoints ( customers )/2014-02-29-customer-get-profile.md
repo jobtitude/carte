@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/customers/{:enter_field|me}'
 title: 'Customer get profile'
 type: 'GET'

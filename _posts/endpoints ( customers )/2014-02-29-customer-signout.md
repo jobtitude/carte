@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/customers/sign_out'
 title: 'Customer sign out'
 type: 'DELETE'

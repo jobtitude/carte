@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/customer/{:enter_field|me}/vouchers'
 title: 'Vouchers owned by customer'
 type: 'GET'

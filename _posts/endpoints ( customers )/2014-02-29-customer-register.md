@@ -1,22 +1,20 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/customers'
-title: 'Customer change password'
-type: 'PUT'
+title: 'Customer signup'
+type: 'POST'
 
 layout: nil
 ---
 
-This method allows to change the customer password once it's logged in.
+This method allows to register a new customer in the desired company.
 
 ### Request parameters
 
 * `email`
 * `password`
 * `password_confirmation`
-* `current_password`
 * `company_id`
-
 
 ### Response format
 

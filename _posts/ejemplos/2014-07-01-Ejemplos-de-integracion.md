@@ -1,8 +1,10 @@
 ---
-category: Ejemplos
-path: '/ejemplos-integracion-tpv'
+category: ejemplos
+title: 'Integración TPV'
 
+layout: nil
 ---
+
 
 # Ejemplo básico de integración Loyal Guru <-> TPV
 
@@ -99,13 +101,19 @@ Host: loyalty-jobtitude-staging.herokuapp.com
 1. **Habilitamos campo** de "cupón/promoción" en pantalla de compra de tpv, y ( opcionalmente) **botón** de "validar".
 2. Escaneamos QR o leemos código de cupón directamente de la aplicación y lo **introducimos** en el campo creado
 3. Al introducir el código ( o presionar botón de "validar" ) se **realiza llamada** con el método **GET** al sistema de loyal guru con la siguiente estructura:
-```GET loyal.guru/api/vouchers/xxxxxxx```  
+{% highlight shell %}
+curl http://loyalty-jobtitude-staging.herokuapp.com/api/vouchers/1 
+   -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
+   -H "Content-Type:application/json" 
+   -H "Accept: application/vnd.loyalguru.v1"
+{% endhighlight %}  
 
-  1. Si la llamada devuelve un **status de ERROR 404** ( not found ) significará que el **cupón no existe**, mostaremos por pantalla el mensaje necesaio ( ej: Cupón no encontrado en el sistema, por favor recomendar la recarga del cupón o la introducción del número de cupón correcto )  
-  2. Si la llamada devuelve un **status de 200** significará que el **cupón se ha encontrado** y entonces en el cuerpo de la respuesta llegará un objeto con los datos del cupón.  
+**ERROR:** Si la llamada devuelve un **status de ERROR 404** ( not found ) significará que el **cupón no existe**, mostaremos por pantalla el mensaje necesaio ( ej: Cupón no encontrado en el sistema, por favor recomendar la recarga del cupón o la introducción del número de cupón correcto )
 
-    1. Si el **cupón ya ha sido utilizado** y por lo tanto no es válido el campo "**pending**" vendrá a "**false**", y por lo tanto se podrá mostrar un mensaje de "Lo sentimos el cupón ya se ha utilizado"  
-    2. Si el **cupón es válido** y todavía no se ha canjeado el campo "**pending**" estará a "**true**" y entonces será necesario acceder al campo "discounts". Este campo será un array de objectos de descuentos en el que para el caso de por ejemplo un descuento de un 20% sobre el total del tickect llegará un en el objecto un campo de "**discount**":"**20%**". De esta forma, será responsabilidad del TPV coger este descuento ( ej: 20% ) y aplicarlo al total del ticket.  
+**ÉXITO:** Si la llamada devuelve un **status de 200** significará que el **cupón se ha encontrado** y entonces en el cuerpo de la respuesta llegará un objeto con los datos del cupón.
+  
+* Si el **cupón ya ha sido utilizado** y por lo tanto no es válido el campo "**pending**" vendrá a "**false**", y por lo tanto se podrá mostrar un mensaje de "Lo sentimos el cupón ya se ha utilizado"  
+* Si el **cupón es válido** y todavía no se ha canjeado el campo "**pending**" estará a "**true**" y entonces será necesario acceder al campo "discounts". Este campo será un array de objectos de descuentos en el que para el caso de por ejemplo un descuento de un 20% sobre el total del tickect llegará un en el objecto un campo de "**discount**":"**20%**". De esta forma, será responsabilidad del TPV coger este descuento ( ej: 20% ) y aplicarlo al total del ticket.  
 
 ### 3. Guardar la compra
 

@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/vouchers/:id'
 title: 'Vouchers get one'
 type: 'GET'

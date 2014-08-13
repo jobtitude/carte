@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/customers/password'
 title: 'Customer reset password'
 type: 'POST'

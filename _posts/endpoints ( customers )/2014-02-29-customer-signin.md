@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/customers/sign_in'
 title: 'Customer signin'
 type: 'POST'

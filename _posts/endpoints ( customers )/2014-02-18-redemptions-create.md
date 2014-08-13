@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/customer/{:enter_field|me}/redemptions/:reward_id'
 title: 'Redemptions create new'
 type: 'GET'

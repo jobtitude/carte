@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/locations'
 title: 'Locations listing'
 type: 'GET'

@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/rewards'
 title: 'Rewards listing'
 type: 'GET'

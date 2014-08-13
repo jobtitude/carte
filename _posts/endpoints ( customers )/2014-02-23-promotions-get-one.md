@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/promotions/:id'
 title: 'Promotions get one'
 type: 'GET'

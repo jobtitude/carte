@@ -1,5 +1,5 @@
 ---
-category: Endpoints
+category: Endpoints ( Customers )
 path: '/customer/{:enter_field|me}/rewards '
 title: 'Rewards available for certain user'
 type: 'GET'
