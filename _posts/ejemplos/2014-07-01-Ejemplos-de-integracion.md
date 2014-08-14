@@ -101,6 +101,7 @@ Host: loyalty-jobtitude-staging.herokuapp.com
 1. **Habilitamos campo** de "cupón/promoción" en pantalla de compra de tpv, y ( opcionalmente) **botón** de "validar".
 2. Escaneamos QR o leemos código de cupón directamente de la aplicación y lo **introducimos** en el campo creado
 3. Al introducir el código ( o presionar botón de "validar" ) se **realiza llamada** con el método **GET** al sistema de loyal guru con la siguiente estructura:
+
 {% highlight bash %}
 curl http://loyalty-jobtitude-staging.herokuapp.com/api/vouchers/1 
    -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
@@ -113,7 +114,24 @@ curl http://loyalty-jobtitude-staging.herokuapp.com/api/vouchers/1
 **ÉXITO:** Si la llamada devuelve un **status de 200** significará que el **cupón se ha encontrado** y entonces en el cuerpo de la respuesta llegará un objeto con los datos del cupón.
   
 * Si el **cupón ya ha sido utilizado** y por lo tanto no es válido el campo "**pending**" vendrá a "**false**", y por lo tanto se podrá mostrar un mensaje de "Lo sentimos el cupón ya se ha utilizado"  
-* Si el **cupón es válido** y todavía no se ha canjeado el campo "**pending**" estará a "**true**" y entonces será necesario acceder al campo "discounts". Este campo será un array de objectos de descuentos en el que para el caso de por ejemplo un descuento de un 20% sobre el total del tickect llegará un en el objecto un campo de "**discount**":"**20%**". De esta forma, será responsabilidad del TPV coger este descuento ( ej: 20% ) y aplicarlo al total del ticket.  
+* Si el **cupón es válido** y todavía no se ha canjeado, el campo "**pending**" estará a "**true**" y entonces será necesario acceder al objecto **voucheable** ( en el que se accederá a toda la información descriptiva de la promoción,description, discount, etc...), en concreto se deberá acceder al campo de "**discount**":"**20%**" dentro del objeto **voucheable**. De esta forma, será responsabilidad del TPV coger este descuento ( ej: 20% ) y aplicarlo al total del ticket en el TPV del establecimiento. 
+
+{% highlight json %}
+{
+  "expiration_to": "2014-12-31",
+  "expiration_from": "2014-01-01",
+  "pending": true,
+  "id": "8326747",
+  "voucheable": {
+    "discount": "20%",
+    "type": "Coupon",
+    "description": "xxxxx",
+    "name": "20% decuento",
+    "id": 1,
+    ...
+  }
+}
+{% endhighlight %}
 
 ### 3. Guardar la compra
 
@@ -122,21 +140,21 @@ curl http://loyalty-jobtitude-staging.herokuapp.com/api/vouchers/1
 **petición** a la API: 
 
 {% highlight bash %}
-curl -v http://loyalty-jobtitude-staging.herokuapp.com/api/activities 
--u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
--H "Content-Type:application/json" 
--H "Accept: application/vnd.loyalguru.v1"  
--d '{
-	"customer_id":"1", 
-	"external_id":"200", 
-	"total":"4000", 
-	"location_id":"1",
-	"voucher_id":"xxxxxxx", 
-	"lines_attributes": [
-		{"product_id":"99","quantity":"3","order":"1","price":"50"},
-		{"product_id":"45678","quantity":"4","order":"2","price":"199"}
-		]
-}'
+  curl -v http://loyalty-jobtitude-staging.herokuapp.com/api/activities 
+  -u prueba@jobtitude.com:user-2HZDS1rAKn9dZdzFV4HA 
+  -H "Content-Type:application/json" 
+  -H "Accept: application/vnd.loyalguru.v1"  
+  -d '{
+  	"customer_id":"1", 
+  	"external_id":"200", 
+  	"total":"4000", 
+  	"location_id":"1",
+  	"voucher_id":"xxxxxxx", 
+  	"lines_attributes": [
+  		{"product_id":"99","quantity":"3","order":"1","price":"50"},
+  		{"product_id":"45678","quantity":"4","order":"2","price":"199"}
+  		]
+  }'
 {% endhighlight %}
 
 Notar: 
