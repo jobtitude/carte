@@ -157,6 +157,8 @@ curl http://loyalty-jobtitude-staging.herokuapp.com/api/vouchers/1
   }'
 {% endhighlight %}
 
+Se recomienda **también guardar la compra** aunque no haya ningún cliente identificado. Bastaría no pasar los parámetros **customer_id** y **voucher_id**.
+
 Notar: 
 
 - que los **parámetros**, al especificar el content-type en **JSON** deberán enviarse en JSON. 
