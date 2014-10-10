@@ -146,13 +146,13 @@ curl http://loyalty-jobtitude-staging.herokuapp.com/api/vouchers/1
   -H "Accept: application/vnd.loyalguru.v1"  
   -d '{
   	"customer_id":"1", 
-  	"external_id":"200",
+  	"code":"200",
   	"total":"4000", 
-  	"location_id":"1",
+  	"location_code":"123",
   	"voucher_id":"xxxxxxx", 
   	"lines_attributes": [
-  		{"product_id":"99","quantity":"3","order":"1","price":"50","discount_type":"20%", "discount":"200.99", "size":"L", "color":"yellow", "custom_1":"WIN14"},
-  		{"product_id":"45678","quantity":"4","order":"2","price":"199"}
+  		{"product_code":"XR7654","quantity":"3","order":"1","price":"50","discount_type":"20%", "discount":"200.99", "size":"L", "color":"yellow", "custom_1":"WIN14"},
+  		{"product_code":"45678","quantity":"4","order":"2","price":"199"}
   		]
   }'
 {% endhighlight %}
@@ -164,12 +164,12 @@ Notar:
 - que los **parámetros**, al especificar el content-type en **JSON** deberán enviarse en JSON. 
 - **creation_date** formato ("04/12/2014 18:00:00") : Es posible forzar la fecha de creación gracias al parámetro creation_date, si no se especifica se cogerá la fecha y hora del momento en concreto.
 - **customer_id** sería el id escaneado del consumidor
-- **external_id** sería el id del ticket en el sistema propio de la empresa
+- **code** sería el id del ticket en el sistema propio de la empresa
 - **location_id** sería el id ( en el sistema de Loyal Guru ) del establecimiento del tpv de la empresa ( otorgado por Loyal Guru )
-- **location_external_id** sería el id ( en el sistema de la empresa, pero asignado internamente a loyal guru ) del establecimiento del tpv de la empresa.
+- **location_code** sería el id ( en el sistema de la empresa, pero asignado internamente a loyal guru ) del establecimiento del tpv de la empresa.
 - LOCATION: Si no llega ninguna de las anteriores se asignará la location del usuario
 - **total** sería el dinero total pagado por el cliente en ese ticket
-- **lines_attributes** es el array que contiene cada producto ( **product_id**: id del producto para la empresa, **quantity**: cantidad de productos en ticket, **order**: orden de la línea de ticket, **price**: precio del artículo ) 
+- **lines_attributes** es el array que contiene cada producto ( **product_code**: id del producto para la empresa, **product_id**: el id en el sistema de Loyal Guru, **quantity**: cantidad de productos en ticket, **order**: orden de la línea de ticket, **price**: precio del artículo ) 
 - **voucher_id**: sería el código del cupón validado  
 
 ***

@@ -43,6 +43,14 @@ curl -d '{"param": value, "param":value}' -H "Content-type: application/json" -u
 ### Resources names
 Use the plural version of a resource name unless the resource in question is a singleton within the system (for example, in most systems a given user would only ever have one account). This keeps it consistent in the way you refer to particular resources.
 
+### Resources attributes
+
+**To code or to ID**:   
+You'l se often references to **code** and **id**. **id** is the internal id of our Loyal Guru systema, while **code** is the Id the comapny may have assigned to certain object in their database.
+For example a certain product **code** for a company may be XRZ784JEANS while our **id** will be 143566.
+
+You can use in certain api calls one of the two, but keep in mind that if your send a **code** that is not beofre created and assigned in the loyal guru backend, a new item will be created with the code.
+
 ### Downcase paths and attributes
 
 Use downcased and dash-separated path names, for alignment with hostnames, e.g:
